@@ -1,0 +1,13 @@
+- hosts: localhost
+  tasks:
+  - name: Unarchive Maven after download it 
+    unarchive: src=http://apache.mivzakim.net/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.zip dest=~ copy=no creates=~/apache-maven-3.3.9
+    become: yes
+    become_method: sudo
+  - name: define M2_HOME
+    lineinfile: dest=~/.bash_profile line="export M2_HOME=~/apache-maven-3.3.9" regexp="^export M2_HOME.*" insertbefore="^PATH.*"
+  - name: define M2
+    lineinfile: dest=~/.bash_profile line="export M2=${M2_HOME}/bin" regexp="^export M2=.*" insertafter="^export M2_HOME.*"
+  - name: add Maven to PATH
+    lineinfile: dest=~/.bash_profile line="PATH=$M2:$PATH" insertbefore="^export PATH.*"
+
