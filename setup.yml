@@ -1,0 +1,15 @@
+- hosts: localhost
+  tasks:
+  - name: Install git
+    yum: name=git state=latest
+    become: yes
+    become_method: sudo
+  - name: Clone ourrepo to home directory /home/ec2-user
+    git: repo=https://github.com/isigron/ourrepo.git dest=/home/ec2-user/ourrepo
+    become: yes
+    become_method: sudo
+  - name: Clone petclinic to home directory /home/ec2-user
+    git: repo=https://github.com/isigron/spring-petclinic.git dest=/home/ec2-user/petclinic
+    become: yes
+    become_method: sudo
+ 
